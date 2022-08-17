@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+# Cron:
+# 0 */2 * * *
+
 import os
 import sys
 
