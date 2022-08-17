@@ -3,7 +3,7 @@
 
 # [task_local]
 # Dler Cloud签到
-# 0 */2 * * * dlercloud_checkin.py, tag=Dler Cloud签到, enabled=true
+# 0 */2 * * * Dler Cloud签到, tag=Dler Cloud签到, enabled=true
 
 import os
 import sys
