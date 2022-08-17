@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+# [task_local]
+# Dler Cloud签到
+# 0 */2 * * * dlercloud_checkin.py, tag=Dler Cloud签到, enabled=true
+
 import os
 import sys
 
