@@ -6,6 +6,7 @@
 # * * * * * ylgy.py, tag=羊了个羊刷分, enabled=true
 
 import os
+import random
 
 import requests
 
@@ -59,12 +60,22 @@ def game_over(token: str) -> None:
         print("传入的token为None，获取token可能出错")
         return
 
-    print("正在刷分")
-    game_over_url = BASE_URL + "/game/game_over?rank_score=1&rank_state=1&rank_time=547&rank_role=1&skin=1"
+    print("正在完成羊群")
+    game_over_url = \
+        BASE_URL \
+        + ("/game/game_over?rank_score=1&rank_state=1&rank_time=%s&rank_role=1&skin=1" % random.randint(1, 3600))
 
     response = requests.get(url=game_over_url, headers=build_headers(token))
     if is_response_successful(response):
-        print("刷分成功")
+        print("已完成羊群")
+
+    print("正在完成话题")
+    finish_topic_url = \
+        BASE_URL \
+        + ("/game/topic_game_over?rank_score=1&rank_state=1&rank_time=%s&rank_role=2&skin=1" % random.randint(1, 3600))
+    response = requests.get(url=finish_topic_url, headers=build_headers(token))
+    if is_response_successful(response):
+        print("已完成话题")
 
 
 def build_headers(token: str = None) -> dict:
