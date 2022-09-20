@@ -25,7 +25,8 @@ def game_over(token: str) -> None:
     print("正在完成羊群")
     game_over_url = \
         BASE_URL \
-        + ("/game/game_over?rank_score=1&rank_state=1&rank_time=%s&rank_role=1&skin=1" % random.randint(1, 3600))
+        + ("/game/game_over?rank_score=1&rank_state=1&rank_time=%s&rank_role=1&skin=%s" %
+           (random.randint(1, 3600), random.randint(1, 48)))
 
     response = requests.get(url=game_over_url, headers=build_headers(token))
     if is_response_successful(response):
@@ -34,7 +35,8 @@ def game_over(token: str) -> None:
     print("正在完成话题")
     finish_topic_url = \
         BASE_URL \
-        + ("/game/topic_game_over?rank_score=1&rank_state=1&rank_time=%s&rank_role=2&skin=1" % random.randint(1, 3600))
+        + ("/game/topic_game_over?rank_score=1&rank_state=1&rank_time=%s&rank_role=2&skin=%s" %
+           (random.randint(1, 3600), random.randint(1, 48)))
     response = requests.get(url=finish_topic_url, headers=build_headers(token))
     if is_response_successful(response):
         print("已完成话题")
