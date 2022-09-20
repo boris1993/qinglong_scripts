@@ -3,7 +3,7 @@
 
 # [task_local]
 # Dler Cloud签到
-# * * * * * ylgy.py, tag=羊了个羊刷分, enabled=true
+# * * * * * ylgy.py, tag=羊了个羊刷分, enabled=false
 
 import os
 import random
