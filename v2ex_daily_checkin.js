@@ -29,26 +29,17 @@ let headers = {
 async function doSignIn() {
     console.log('正在获取redeem URL');
 
-    let response = await axios({
-        url: CHECKIN_URL,
-        headers: { headers },
-        responseType: "arraybuffer", 
-        responseEncoding: "gbk",
-    });
-    // .get(CHECKIN_URL, { headers })
-    // .then((response) => {
-    //     return response.data;
-    // })
-    // .catch((error) => {
-    //     console.log(error);
-    //     return;
-    // });
-
-    let { data } = response;
-    console.log(data);
-    console.log('==============');
-    let utf8decoder = new TextDecoder("GBK");
-    let returnedHtml = utf8decoder.decode(data);
+    let returnedHtml = await axios
+        .get(CHECKIN_URL, { headers })
+        .then((response) => {
+            console.log(response);
+            console.log("==========================");
+            return response.data;
+        })
+        .catch((error) => {
+            console.log(error);
+            return;
+        });
 
     console.log(returnedHtml);
 
