@@ -47,7 +47,7 @@ async function doSignIn() {
     let { data } = response;
     console.log(data);
     console.log('==============');
-    let utf8decoder = new TextDecoder("gbk");
+    let utf8decoder = new TextDecoder("GBK");
     let returnedHtml = utf8decoder.decode(data);
 
     console.log(returnedHtml);
