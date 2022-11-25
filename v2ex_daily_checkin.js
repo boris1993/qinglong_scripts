@@ -29,22 +29,33 @@ let headers = {
 async function doSignIn() {
     console.log('正在获取redeem URL');
 
-    let returnedHtml = await axios
-        .get(CHECKIN_URL, { headers })
-        .then((response) => {
-            return response.data;
-        })
-        .catch((error) => {
-            console.log(error);
-            return;
-        });
+    let response = await axios({
+        url: CHECKIN_URL,
+        headers: { headers },
+        // responseType: "arraybuffer", 
+        responseEncoding: "utf8",
+    });
+    // .get(CHECKIN_URL, { headers })
+    // .then((response) => {
+    //     return response.data;
+    // })
+    // .catch((error) => {
+    //     console.log(error);
+    //     return;
+    // });
+
+    let { data } = response;
+    console.log(data);
+    console.log('==============');
+    let utf8decoder = new TextDecoder("utf-8");
+    let returnedHtml = utf8decoder.decode(data);
+
+    console.log(returnedHtml);
 
     if (returnedHtml.indexOf(ALREADY_CHECKED_IN_MESSAGE) !== -1) {
         console.log(ALREADY_CHECKED_IN_MESSAGE);
         return;
     }
-
-    console.log(returnedHtml);
 
     let redeemUrl = returnedHtml.match(/\/mission\/daily\/redeem\?once=\d+/)[0];
     let once = redeemUrl.match(/\d+/)[0];
