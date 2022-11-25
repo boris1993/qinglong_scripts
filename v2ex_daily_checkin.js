@@ -32,7 +32,7 @@ async function doSignIn() {
     let response = await axios({
         url: CHECKIN_URL,
         headers: { headers },
-        // responseType: "arraybuffer", 
+        responseType: "arraybuffer", 
         responseEncoding: "utf8",
     });
     // .get(CHECKIN_URL, { headers })
