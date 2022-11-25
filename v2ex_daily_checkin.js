@@ -19,6 +19,9 @@ let headers = {
     Cookie: COOKIE,
     'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36',
     Referer: 'https://www.v2ex.com/',
+    'accept-encoding': 'gzip, deflate, br',
+    'accept-language': 'zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7',
+    'cache-control': 'no-cache',
 }
 
 async function doSignIn() {
