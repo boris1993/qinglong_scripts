@@ -33,7 +33,7 @@ async function doSignIn() {
         url: CHECKIN_URL,
         headers: { headers },
         responseType: "arraybuffer", 
-        responseEncoding: "utf8",
+        responseEncoding: "gbk",
     });
     // .get(CHECKIN_URL, { headers })
     // .then((response) => {
@@ -47,7 +47,7 @@ async function doSignIn() {
     let { data } = response;
     console.log(data);
     console.log('==============');
-    let utf8decoder = new TextDecoder("utf-8");
+    let utf8decoder = new TextDecoder("gbk");
     let returnedHtml = utf8decoder.decode(data);
 
     console.log(returnedHtml);
