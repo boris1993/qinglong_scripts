@@ -39,6 +39,8 @@ async function doSignIn() {
         return;
     }
 
+    console.log(returnedHtml);
+
     let redeemUrl = returnedHtml.match(/\/mission\/daily\/redeem\?once=\d+/)[0];
     let once = redeemUrl.match(/\d+/)[0];
 
