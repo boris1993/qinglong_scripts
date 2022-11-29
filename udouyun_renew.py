@@ -7,7 +7,6 @@
 
 import os
 import sys
-import time
 import json
 import requests
 
@@ -31,7 +30,6 @@ def main():
     password = os.environ[ENVIRONMENT_VARIABLE_PASSWORD]
 
     session_id = login(username, password)
-    time.sleep(1)
     submit_renewal(session_id)
 
     return
@@ -85,7 +83,7 @@ def submit_renewal(session_id):
 
     response_json = json.loads(response.text)
     print("延期结果：" + response_json["msg"])
-    
+
     return
 
 
