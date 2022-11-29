@@ -8,6 +8,7 @@
 import os
 import sys
 import time
+import json
 import requests
 
 sys.tracebacklimit = 0
@@ -16,13 +17,8 @@ ENVIRONMENT_VARIABLE_USERNAME = "UDOUYUN_USERNAME"
 ENVIRONMENT_VARIABLE_PASSWORD = "UDOUYUN_PASSWORD"
 
 headers = {
-    "Cache-Control": "no-cache",
-    "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-    "Origin": "https://www.udouyun.com",
-    "Pragma": "no-cache",
     "Referer": "https://www.udouyun.com/",
     "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36",
-    "Accept-Encoding": "gzip",
 }
 
 
@@ -87,7 +83,9 @@ def submit_renewal(session_id):
         data=payload,
         files=files)
 
-    print(response.text)
+    response_json = json.loads(response.text)
+    print("延期结果：" + response_json["msg"])
+    
     return
 
 
