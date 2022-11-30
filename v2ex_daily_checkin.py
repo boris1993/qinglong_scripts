@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 # [task_local]
 # V2EX每日签到
 # 10 8 * * * v2ex_daily_checkin.py, tag=V2EX每日签到, enabled=true
