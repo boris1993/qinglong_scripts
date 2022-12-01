@@ -14,7 +14,7 @@ ENVIRONMENT_VARIABLE_COOKIE = "V2EX_COOKIE"
 CHECKIN_URL = "https://www.v2ex.com/mission/daily"
 REDEEM_COIN_URL = "https://www.v2ex.com/mission/daily/redeem?once="
 
-REDEEM_URL_REGEX = r"https:\/\/www.v2ex.com\/mission\/daily\/redeem\?once=\d+"
+REDEEM_URL_REGEX = r"mission\/daily\/redeem\?once=\d+"
 
 ALREADY_CHECKED_IN_MESSAGE = "每日登录奖励已领取"
 CHECKIN_SUCCESSFUL_MESSAGE = '已成功领取每日登录奖励'
@@ -45,12 +45,15 @@ if response_html.find(ALREADY_CHECKED_IN_MESSAGE) != -1:
     sys.exit(0)
 
 redeem_url = re.findall(REDEEM_URL_REGEX, response_html)[0]
-print("签到URL是" + redeem_url)
+redeem_code = re.findall('\d+', redeem_url)[0]
+
+url = "https://www.v2ex.com/mission/daily/redeem?once=" + redeem_code
+print("签到URL是" + url)
 
 print("正在签到")
 
 response = requests.get(
-    url=redeem_url,
+    url=url,
     headers={
         **headers,
         "Referer": "https://www.v2ex.com/mission/daily"
