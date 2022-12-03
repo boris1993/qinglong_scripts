@@ -37,34 +37,34 @@ headers = {
 
 print("正在获取Redeem URL")
 
-response = requests.get(url=CHECKIN_URL, headers=headers)
-response_html = response.text
+mission_page_response = requests.get(url=CHECKIN_URL, headers=headers)
+mission_page_response_html = mission_page_response.text
 
-if response_html.find(ALREADY_CHECKED_IN_MESSAGE) != -1:
+if mission_page_response_html.find(ALREADY_CHECKED_IN_MESSAGE) != -1:
     print(ALREADY_CHECKED_IN_MESSAGE)
     sys.exit(0)
 
-redeem_url = re.findall(REDEEM_URL_REGEX, response_html)[0]
+redeem_url = re.findall(REDEEM_URL_REGEX, mission_page_response_html)[0]
 redeem_code = re.findall('\d+', redeem_url)[0]
 
-url = "https://www.v2ex.com/mission/daily/redeem?once=" + redeem_code
-print("签到URL是" + url)
+redeem_url = "https://www.v2ex.com/mission/daily/redeem?once=" + redeem_code
+print("签到URL是" + redeem_url)
 
 print("正在签到")
 
-response = requests.get(
-    url=url,
+redeem_response = requests.get(
+    url=redeem_url,
     headers={
         **headers,
         "Referer": "https://www.v2ex.com/mission/daily"
     }
 )
 
-response_html = response.text
+redeem_response_html = redeem_response.text
 
-if response_html.find(CHECKIN_SUCCESSFUL_MESSAGE) == -1:
+if redeem_response_html.find(CHECKIN_SUCCESSFUL_MESSAGE) == -1:
     print("签到失败，完整返回内容：")
-    print(response)
+    print(redeem_response_html)
     sys.exit(1)
 
 print(CHECKIN_SUCCESSFUL_MESSAGE)
