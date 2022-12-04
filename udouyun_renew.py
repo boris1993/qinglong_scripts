@@ -3,7 +3,7 @@
 
 # [task_local]
 # 优豆云免费资源自动续期
-# 0 0 * * * udouyun_renew.py, tag=优豆云免费资源自动续期, enabled=true
+# 0 0 * * * udouyun_renew.py, tag=优豆云免费资源自动续期, enabled=false
 
 import os
 import sys
