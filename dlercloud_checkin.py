@@ -57,11 +57,10 @@ def checkin(access_token: str) -> str:
 
     return_code = response_body["ret"]
 
-    match return_code:
-        case "200":
-            result_message = response_body["data"]["checkin"]
-        case _:
-            result_message = response_body["msg"]
+    if return_code == "200":
+        result_message = response_body["data"]["checkin"]
+    else:
+        result_message = response_body["msg"]
 
     print("签到结果：", result_message)
 
