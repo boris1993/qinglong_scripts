@@ -55,10 +55,13 @@ def checkin(access_token: str) -> str:
 
     response_body = response.json()
 
-    if response_body["ret"] == 520:
-        result_message = response_body["msg"]
-    else:
-        result_message = response_body["data"]["checkin"]
+    return_code = response_body["ret"]
+
+    match return_code:
+        case "200":
+            result_message = response_body["data"]["checkin"]
+        case _:
+            result_message = response_body["msg"]
 
     print("签到结果：", result_message)
 
