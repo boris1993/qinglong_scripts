@@ -1,7 +1,7 @@
 // [task_local]
 // 定时同步GitHub上游repo
 // 0 0 * * * github-sync-upstream.js, tag=定时同步GitHub上游repo, enabled=true
-
+import fetch from "node-fetch";
 const { Octokit } = require("@octokit/core");
 
 const githubRepoOwner = process.env.GITHUB_REPO_OWNER;
@@ -20,7 +20,8 @@ if (!repos) {
 
 const githubAccessToken = process.env.GITHUB_TOKEN;
 const octokit = new Octokit({
-    auth: githubAccessToken
+    auth: githubAccessToken,
+    fetch: fetch
 });
 
 JSON.parse(repos).forEach(async (repository) => {
