@@ -21,7 +21,9 @@ if (!repos) {
 const githubAccessToken = process.env.GITHUB_TOKEN;
 const octokit = new Octokit({
     auth: githubAccessToken,
-    fetch: fetch
+    request: {
+        fetch: fetch
+    }
 });
 
 JSON.parse(repos).forEach(async (repository) => {
