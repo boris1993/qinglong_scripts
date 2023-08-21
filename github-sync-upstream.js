@@ -19,6 +19,11 @@ if (!repos) {
 }
 
 const githubAccessToken = process.env.GITHUB_TOKEN;
+if (!githubAccessToken) {
+    console.error("GitHub access token not specified");
+    return;
+}
+
 const octokit = new Octokit({
     auth: githubAccessToken,
     request: {
