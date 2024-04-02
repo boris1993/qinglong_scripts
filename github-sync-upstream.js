@@ -1,7 +1,6 @@
 // [task_local]
 // 定时同步GitHub上游repo
 // 0 0 * * * github-sync-upstream.js, tag=定时同步GitHub上游repo, enabled=true
-const fetch = require("node-fetch");
 const { Octokit } = require("@octokit/core");
 
 const githubRepoOwner = process.env.GITHUB_REPO_OWNER;
