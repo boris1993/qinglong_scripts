@@ -31,8 +31,6 @@ async function main() {
         nodeFetchOptions.agent = proxyAgent;
     }
 
-
-
     await loadBinanceSimpleEarnProducts();
     await loadOkxSimpleEarnProducts();
 }
