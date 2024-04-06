@@ -1,6 +1,6 @@
 // [task_local]
 // 定时同步加密货币APR到InfluxDB
-// 0 0 * * * crypto-coin-apr.js, tag=定时同步加密货币APR到InfluxDB, enabled=true
+// 0 * * * * crypto-coin-apr.js, tag=定时同步加密货币APR到InfluxDB, enabled=true
 
 const fetch = require('node-fetch');
 const {HttpsProxyAgent} = require('https-proxy-agent');
