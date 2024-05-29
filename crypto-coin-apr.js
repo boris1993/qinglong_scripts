@@ -71,7 +71,7 @@ async function loadOkxSimpleEarnProducts() {
 
         console.log('Loading OKX Simple Earn products');
         const data = await doGet(okxSimpleEarnProductsApi);
-        const productList = data['data']['all'];
+        const productList = data['data']['allProducts']['currencies'];
 
         if (productList.length === 0) {
             console.error('OKX Simple Earn product list returned empty');
