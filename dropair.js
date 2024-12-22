@@ -3,7 +3,6 @@
 // 0 12 * * * crypto-coin-apr.js, tag=定时同步加密货币APR到InfluxDB, enabled=true
 
 const fetch = require('node-fetch');
-const {HttpsProxyAgent} = require('https-proxy-agent');
 
 async function main() {
     const tokensStr = process.env.DROP_AIR_TOKENS;
