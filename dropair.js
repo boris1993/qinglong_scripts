@@ -20,7 +20,10 @@ async function main() {
         const response = await fetch('https://dropair.io/api/tasks', {
             method: 'POST',
             headers: {
-                'Cookie': `auth-token: ${token}`,
+                'Cookie': `auth-token=${token}`,
+                'Origin': 'https://dropair.io',
+                'User-Agent': 'Mozilla/5.0 (Linux; Android 11; Pixel 5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.210 Mobile Safari/537.36',
+                'Referer': 'https://dropair.io/',
             },
             body: JSON.stringify({
                 'taskId': 'daily-task'
