@@ -10,7 +10,7 @@ const coinPriceApi = 'https://www.binance.com/api/v3/ticker/price';
 
 const coinPriceSymbols = process.env.COIN_PRICE_SYMBOLS || '';
 const influxDbToken = process.env.INFLUX_DB_TOKEN;
-const influxDbBucket = process.env.INFLUX_DB_BUCKET;
+const influxDbBucket = process.env.INFLUX_DB_CRYPTO_COIN_APR_BUCKET;
 const nodeFetchOptions = {};
 
 let proxyAgent;

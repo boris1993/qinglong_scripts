@@ -10,7 +10,7 @@ const binanceSimpleEarnProductApi = 'https://www.binance.com/bapi/earn/v1/friend
 const okxSimpleEarnProductsApi = 'https://www.okx.com/priapi/v1/earn/simple-earn/all-products?type=all';
 
 const influxDbToken = process.env.INFLUX_DB_TOKEN;
-const influxDbBucket = process.env.INFLUX_DB_BUCKET;
+const influxDbBucket = process.env.INFLUX_DB_CRYPTO_COIN_APR_BUCKET;
 const nodeFetchOptions = {};
 let proxyAgent;
 
