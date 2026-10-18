@@ -23,8 +23,7 @@ async function main() {
     }
 
     const rune = await login();
-    const csrfToken = randomBytes(8).toString("hex");
-    await checkIn(rune, csrfToken);
+    await checkIn(rune);
 }
 
 async function login() {
@@ -50,6 +49,11 @@ async function login() {
         },
     );
 
+    const body = await resp.json();
+    if (body.message) {
+        throw new Error(body.message);
+    }
+
     const rune = await resp.headers.raw()["set-cookie"].find((cookie) => cookie.startsWith("BAHARUNE"));
     if (!rune) {
         throw new Error("Login failed, no cookie returned");
@@ -58,8 +62,13 @@ async function login() {
     return rune;
 }
 
-async function checkIn(rune, csrfToken) {
+async function checkIn(rune) {
     console.log("正在签到");
+
+    const csrfTokenResp = await fetch("https://www.gamer.com.tw/ajax/get_csrf_token.php");
+    const csrfToken = await csrfTokenResp.text();
+    console.log(`csrfToken: ${csrfToken}`);
+
     const resp = await fetch(
         "https://api.gamer.com.tw/user/v1/signin.php",
         {
@@ -67,16 +76,20 @@ async function checkIn(rune, csrfToken) {
             headers: {
                 "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
                 "X-Bahamut-Csrf-Token": csrfToken,
-                Cookie: `BAHARUNE=${rune}; ckBahamutCsrfToken=${csrfToken}`,
+                Cookie: `BAHARUNE=${rune}`,
             },
             body: new URLSearchParams({
                 action: 1,
+                token: csrfToken,
             }),
         });
 
     const body = await resp.json();
     console.log(body);
-    if (body.data) {
+
+    if (body.error) {
+        throw new Error(body.error.message);
+    } else if (body.data) {
         console.log(`签到成功，已连续签到${body.data.days}天`);
     } else {
         const failMsg = body.error ? body.error.message : null;
