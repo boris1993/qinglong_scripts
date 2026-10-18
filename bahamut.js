@@ -54,12 +54,12 @@ async function login() {
         throw new Error(body.message);
     }
 
-    const rune = await resp.headers.raw()["set-cookie"].find((cookie) => cookie.startsWith("BAHARUNE"));
-    if (!rune) {
+    const runeCookie = await resp.headers.raw()["set-cookie"].find((cookie) => cookie.startsWith("BAHARUNE"));
+    if (!runeCookie) {
         throw new Error("Login failed, no cookie returned");
     }
 
-    return rune;
+    return runeCookie.split(";")[0].split("=")[1];
 }
 
 async function checkIn(rune) {
