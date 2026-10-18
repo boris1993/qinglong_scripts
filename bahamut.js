@@ -98,6 +98,9 @@ async function checkIn(rune) {
 
     if (body.data) {
         console.log(`签到成功，已连续签到${body.data.days}天`);
+    } else if (body.error && body.error.code === 8892) {
+        // 已经签到过，不是错误
+        console.log(body.error.message);
     } else {
         const failMsg = body.error ? body.error.message : null;
         throw new Error(`签到失败: ${failMsg || body.message || "未知错误"}`);
