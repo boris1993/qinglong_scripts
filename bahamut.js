@@ -130,7 +130,7 @@ async function aniCheckIn(rune) {
             }
         }
     );
-    console.log(aniQuestionsResp);
+    console.log(await aniQuestionsResp.text());
     const aniQuestions = await aniQuestionsResp.json();
     console.log(`今日题目：${aniQuestions.question}，选项1：${aniQuestions.a1}，选项2：${aniQuestions.a2}，选项3：${aniQuestions.a3}，选项4：${aniQuestions.a4}`);
 
