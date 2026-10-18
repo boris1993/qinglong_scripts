@@ -1,6 +1,6 @@
 // [task_local]
 // 巴哈姆特签到
-// 0 0 * * * bahamut.js, tag=巴哈姆特签到, enabled=true
+// 0 10 * * * bahamut.js, tag=巴哈姆特签到, enabled=true
 
 const fetch = require("node-fetch");
 const speakeasy = require("speakeasy");
