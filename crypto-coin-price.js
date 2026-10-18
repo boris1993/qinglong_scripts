@@ -1,6 +1,6 @@
 // [task_local]
 // 定时同步加密货币价格到InfluxDB
-// */15 * * * * crypto-coin-price.js, tag=定时同步加密货币价格到InfluxDB, enabled=true
+// */15 * * * * crypto-coin-price.js, tag=定时同步加密货币价格到InfluxDB, enabled=false
 
 const fetch = require('node-fetch');
 const {HttpsProxyAgent} = require('https-proxy-agent');

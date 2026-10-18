@@ -1,6 +1,6 @@
 // [task_local]
 // Huggingface Space保活
-// 0 3 * * * huggingface-keepalive.js, tag=Huggingface Space保活, enabled=true
+// 0 3 * * * huggingface-keepalive.js, tag=Huggingface Space保活, enabled=false
 
 const fetch = require('node-fetch');
 

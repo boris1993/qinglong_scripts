@@ -1,6 +1,6 @@
 // [task_local]
 // 定时同步贵金属价格（人民币）到InfluxDB
-// */20 * * * * precious_metal_quote.js, tag=定时同步贵金属价格（人民币）到InfluxDB, enabled=true
+// */20 * * * * precious_metal_quote.js, tag=定时同步贵金属价格（人民币）到InfluxDB, enabled=false
 
 const fetch = require('node-fetch');
 const {HttpsProxyAgent} = require('https-proxy-agent');
