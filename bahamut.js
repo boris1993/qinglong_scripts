@@ -65,7 +65,15 @@ async function login() {
 async function checkIn(rune) {
     console.log("正在签到");
 
-    const csrfTokenResp = await fetch("https://www.gamer.com.tw/ajax/get_csrf_token.php");
+    const csrfTokenResp = await fetch(
+        "https://www.gamer.com.tw/ajax/get_csrf_token.php",
+        {
+            headers: {
+                "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+                Cookie: `BAHARUNE=${rune}`,
+            }
+        }
+    );
     const csrfToken = await csrfTokenResp.text();
     console.log(`csrfToken: ${csrfToken}`);
 
@@ -75,14 +83,14 @@ async function checkIn(rune) {
             method: "POST",
             headers: {
                 "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
-                "X-Bahamut-Csrf-Token": csrfToken,
                 Cookie: `BAHARUNE=${rune}`,
             },
             body: new URLSearchParams({
                 action: 1,
                 token: csrfToken,
             }),
-        });
+        }
+    );
 
     const body = await resp.json();
     console.log(body);
