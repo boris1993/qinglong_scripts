@@ -5,7 +5,6 @@
 const fetch = require("node-fetch");
 const speakeasy = require("speakeasy");
 const { HttpsProxyAgent } = require("https-proxy-agent");
-const { randomBytes } = require("crypto");
 
 const username = process.env.BAHAMUT_USERNAME;
 const password = process.env.BAHAMUT_PASSWORD;
@@ -65,8 +64,6 @@ async function login() {
 async function checkIn(rune) {
     console.log("正在签到");
 
-    console.log(`rune: ${rune}`);
-
     const csrfTokenResp = await fetch(
         "https://www.gamer.com.tw/ajax/get_csrf_token.php",
         {
@@ -77,7 +74,6 @@ async function checkIn(rune) {
         }
     );
     const csrfToken = await csrfTokenResp.text();
-    console.log(`csrfToken: ${csrfToken}`);
     if (!csrfToken) {
         throw new Error("获取CSRF token失败");
     }
@@ -100,13 +96,11 @@ async function checkIn(rune) {
     const body = await resp.json();
     console.log(body);
 
-    if (body.error) {
-        throw new Error(body.error.message);
-    } else if (body.data) {
+    if (body.data) {
         console.log(`签到成功，已连续签到${body.data.days}天`);
     } else {
         const failMsg = body.error ? body.error.message : null;
-        throw new Error(`签到失败: ${failMsg || body.message || '未知'}`);
+        throw new Error(`签到失败: ${failMsg || body.message || "未知错误"}`);
     }
 }
 
