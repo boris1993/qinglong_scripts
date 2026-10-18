@@ -76,9 +76,12 @@ async function checkIn(rune) {
     );
     const csrfToken = await csrfTokenResp.text();
     console.log(`csrfToken: ${csrfToken}`);
+    if (!csrfToken) {
+        throw new Error("获取CSRF token失败");
+    }
 
     const resp = await fetch(
-        "https://api.gamer.com.tw/user/v1/signin.php",
+        "https://www.gamer.com.tw/ajax/signin.php",
         {
             method: "POST",
             headers: {
