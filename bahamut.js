@@ -59,7 +59,7 @@ async function login() {
         throw new Error("Login failed, no cookie returned");
     }
 
-    return runeCookie.split(";")[0].split("=")[1];
+    return runeCookie.split(";")[0];
 }
 
 async function checkIn(rune) {
@@ -72,7 +72,7 @@ async function checkIn(rune) {
         {
             headers: {
                 "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
-                Cookie: `BAHARUNE=${rune}`,
+                Cookie: `${rune}`,
             }
         }
     );
@@ -88,7 +88,7 @@ async function checkIn(rune) {
             method: "POST",
             headers: {
                 "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
-                Cookie: `BAHARUNE=${rune}`,
+                Cookie: `${rune}`,
             },
             body: new URLSearchParams({
                 action: 1,
