@@ -74,12 +74,14 @@ async function checkIn(rune, csrfToken) {
             }),
         });
 
-    const data = await resp.json();
-    if (data.error.message) {
-        throw new Error(`Check-in failed: ${data.error.message}`);
+    const body = await resp.json();
+    console.log(body);
+    if (body.data) {
+        console.log(`签到成功，已连续签到${body.data.days}天`);
+    } else {
+        const failMsg = body.error ? body.error.message : null;
+        throw new Error(`签到失败: ${failMsg || body.message || '未知'}`);
     }
-
-    console.log("每日签到已达成");
 }
 
 main().catch((error) => {
