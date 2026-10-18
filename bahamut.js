@@ -65,6 +65,8 @@ async function login() {
 async function checkIn(rune) {
     console.log("正在签到");
 
+    console.log(`rune: ${rune}`);
+
     const csrfTokenResp = await fetch(
         "https://www.gamer.com.tw/ajax/get_csrf_token.php",
         {
