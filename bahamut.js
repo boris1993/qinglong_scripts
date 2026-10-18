@@ -39,15 +39,13 @@ async function login() {
                 Cookie: "ckAPP_VCODE=7045",
             },
             body: new URLSearchParams({
+                uid: username,
+                passwd: password,
                 twoStepAuth: speakeasy.totp({
-                    uid: username,
-                    passwd: password,
-                    twoStepAuth: speakeasy.totp({
-                        secret: totp,
-                        encoding: "base32",
-                    }),
-                    vcode: "7045",
+                    secret: totp,
+                    encoding: "base32",
                 }),
+                vcode: "7045",
             }),
         },
     );
