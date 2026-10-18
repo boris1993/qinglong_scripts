@@ -22,7 +22,18 @@ async function main() {
     }
 
     const rune = await login();
-    await checkIn(rune);
+
+    try {
+        await forumCheckIn(rune);
+    } catch (e) {
+        console.error(e);
+    }
+
+    try {
+        await aniCheckIn(rune);
+    } catch (e) {
+        console.error(e);
+    }
 }
 
 async function login() {
@@ -61,7 +72,7 @@ async function login() {
     return runeCookie.split(";")[0];
 }
 
-async function checkIn(rune) {
+async function forumCheckIn(rune) {
     console.log("正在签到");
 
     const csrfTokenResp = await fetch(
@@ -105,6 +116,91 @@ async function checkIn(rune) {
         const failMsg = body.error ? body.error.message : null;
         throw new Error(`签到失败: ${failMsg || body.message || "未知错误"}`);
     }
+}
+
+async function aniCheckIn(rune) {
+    console.log("开始签到动画疯");
+
+    const aniQuestionsResp = await fetch(
+        `https://ani.gamer.com.tw/ajax/animeGetQuestion.php?t=${Date.now()}`,
+        {
+            headers: {
+                "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+                Cookie: `${rune}`,
+            }
+        }
+    );
+    const aniQuestions = await aniQuestionsResp.json();
+    console.log(`今日题目：${aniQuestions.question}，选项1：${aniQuestions.a1}，选项2：${aniQuestions.a2}，选项3：${aniQuestions.a3}，选项4：${aniQuestions.a4}`);
+
+    const answer = getAniQuestionAnswer(rune);
+
+    console.log("开始答题");
+    const submitAnswerResp = await fetch(
+        "https://ani.gamer.com.tw/ajax/animeAnsQuestion.php",
+        {
+            method: "POST",
+            headers: {
+                "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+                Cookie: `${rune}`,
+            },
+            body: new URLSearchParams({
+                token: csrfToken,
+                ans: answer,
+                t: Date.now()
+            }),
+        }
+    );
+    const submitAnswerRespBody = await submitAnswerResp.json();
+    if (submitAnswerRespBody.ok) {
+        console.log(`动画疯答题成功，奖励：${submitAnswerRespBody.gift}`);
+    } else {
+        const failMsg = body.error ? body.error.message : null;
+        throw new Error(`动画疯答题失败: ${failMsg || body.message || "未知错误"}`);
+    }
+}
+
+async function getAniQuestionAnswer(rune) {
+    const blackxblueUserHomeResp = await fetch(
+        "https://api.gamer.com.tw/mobile_app/bahamut/v1/home.php?owner=blackXblue&page=1",
+        {
+            headers: {
+                "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+                Cookie: `${rune}`,
+            }
+        }
+    );
+    const blackxblueUserHome = await blackxblueUserHomeResp.json();
+
+    const date = new Date();
+    const currentMonthAndDay = `${date.getMonth() + 1}/${date.getDate()}`;
+
+    const creationToday = blackxblueUserHome.creation.filter(c => c.title.includes(currentMonthAndDay));
+    if (!creationToday || creationToday[0] || creationToday[0].sn) {
+        throw new Error("从blackxblue的主页获取答案失败，找不到今天的答案");
+    }
+
+    const sn = creationToday[0].sn;
+    const articleResp = await fetch(
+        `https://api.gamer.com.tw/mobile_app/bahamut/v1/home_creation_detail.php?sn=${sn}`,
+        {
+            headers: {
+                "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+                Cookie: `${rune}`,
+            }
+        }
+    );
+    const article = await articleResp.json();
+    const articleContent = article.content;
+    const answerRegex = /A:(\d)/
+    const answer = articleContent.split(answerRegex)[1];
+
+    if (!answer) {
+        throw new Error("从帖子中提取答案失败");
+    }
+
+    console.log(`答案选项是${answer}`);
+    return answer;
 }
 
 main().catch((error) => {
